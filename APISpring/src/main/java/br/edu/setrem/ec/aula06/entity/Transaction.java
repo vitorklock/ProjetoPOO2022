@@ -1,38 +1,49 @@
 package br.edu.setrem.ec.aula06.entity;
 
-import java.time.LocalDateTime;
 import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 
 @Entity
 public class Transaction {
-	
-	public Transaction() {
-		this.date = new Date();
-	}
-	
+
 	@Id
 	private Integer id;
-	@ManyToOne
-	private Supplier supplier;
-	private Date date; 
+	private Double value;
+	private Date dueDate;
+	private Date paymentDate;
+	private String way;
 	private String description;
-	private String situation;
-	
-	//Getters and Setters
 	public Integer getId() {
 		return id;
 	}
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	public Date getDate() {
-		return date;
+	public Double getValue() {
+		return value;
 	}
-	public void setDate(Date date) {
-		this.date = date;
+	public void setValue(Double value) {
+		this.value = value;
+	}
+	public Date getDueDate() {
+		return dueDate;
+	}
+	public void setDueDate(Date dueDate) {
+		this.dueDate = dueDate;
+	}
+	public Date getPaymentDate() {
+		return paymentDate;
+	}
+	public void setPaymentDate(Date paymentDate) {
+		this.paymentDate = paymentDate;
+	}
+	public String getWay() {
+		return way;
+	}
+	public void setWay(String way) {
+		this.way = way;
 	}
 	public String getDescription() {
 		return description;
@@ -40,17 +51,6 @@ public class Transaction {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public String getSituation() {
-		return situation;
-	}
-	public void setSituation(String situation) {
-		this.situation = situation;
-	}
-	public Supplier getSupplier() {
-		return supplier;
-	}
-	public void setSupplier(Supplier supplier) {
-		this.supplier = supplier;
-	}
-
+	
+	
 }
