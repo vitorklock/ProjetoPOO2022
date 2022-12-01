@@ -4,3 +4,71 @@ body {
     margin: 0;
     overflow-x: hidden;
 }
+
+body {
+    background: #1f1f1f;
+    color: #fff;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+    line-height: 20px;
+    font-weight: 400;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@media (max-width: 571px) {
+    body {
+        font-size: 14px;
+        line-height: 16px;
+    }
+}
+
+.wrapper {
+    padding: 60px 30px;
+    width: 100%;
+    max-width: 1300px;
+}
+
+.table {
+    overflow-x: auto;
+}
+
+.row {
+    display: grid;
+    grid-template-columns: 115px 2px 50px 2px 1fr 2px 1fr 2px 115px;
+    gap: 30px;
+    margin: 2px 0;
+    padding: 13px 10px;
+    border-bottom: 1px dotted rgba(255, 255, 255, 0.2);
+}
+
+.row.paid {
+    background-color: rgba(20, 145, 72, 0.2);
+}
+
+.row.expired {
+    background-color: rgba(182, 38, 38, 0.3);
+}
+
+.row.header {
+    position: relative;
+    padding: 20px 10px;
+    border-bottom: none;
+}
+
+.row.header::after {
+    position: absolute;
+    content: " ";
+    bottom: 0;
+    right: 0;
+    left: 0;
+    height: 2px;
+    background-color: #fff;
+}
+
+div.div {
+    height: 100%;
+    width: 2px;
+    background-color: #fff;
+}
