@@ -1,0 +1,10 @@
+cd ProjetoPOO/ProjetoPOO2022/
+
+git add .
+
+git commit -m "nomeeeee"
+
+git push
+
+
+
