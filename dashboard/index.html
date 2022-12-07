@@ -20,8 +20,89 @@
 </head>
 
 <body>
-
     <div class="wrapper">
+        <div class="header">
+            <button class="btn">+ Novo registro</button>
+        </div>
+        <main>
+            <div class="table">
+                <table>
+                    <tr class="head">
+                        <th class="id">
+                            ID
+                        </th>
+                        <th class="dueDate">
+                            Vencimento
+                        </th>
+                        <th class="way">
+                            A
+                        </th>
+                        <th class="description">
+                            Descrição
+                        </th>
+                        <th class="value">
+                            Valor
+                        </th>
+                        <th class="paymentDate">
+                            Pago em
+                        </th>
+                    </tr>
+                    <tr onclick="items.makeActive(this)">
+                        <td class="id">
+                            1
+                        </td>
+                        <td class="dueDate">
+                            10 / 10 / 2005
+                        </td>
+                        <td class="way">
+                            Pagar
+                        </td>
+                        <td class="description">
+                            Bananas
+                        </td>
+                        <td class="value">
+                            R$ 2000,50
+                        </td>
+                        <td class="paymentDate">
+                            09 / 12 / 2022
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="drawer">
+                <label for="id">
+                    ID
+                    <input type="text" id="id">
+                </label>
+                <label for="dueDate">
+                    Vencimento
+                    <input type="text" id="dueDate">
+                </label>
+                <label for="way">
+                    A
+                    <select name="way" id="way">
+                        <option value="Pagar">Pagar</option>
+                        <option value="Receber">Receber</option>
+                    </select>
+                </label>
+                <label for="description">
+                    Descrição
+                    <input type="text" id="description">
+                </label>
+                <label for="value">
+                    Valor
+                    <input type="text" id="value">
+                </label>
+                <label for="paymentDate">
+                    Pago em
+                    <input type="text" id="paymentDate">
+                </label>
+                <button class="btn" onclick="items.save()">Salvar</button>
+            </div>
+        </main>
+    </div>
+
+    <!-- <div class="wrapper">
         <div class="table">
             <div class="header row">
                 <div class="dueDate">
@@ -66,7 +147,8 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
+
 
     <script src="./assets/scripts/main.js"></script>
 </body>
