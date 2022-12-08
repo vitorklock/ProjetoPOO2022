@@ -22,7 +22,7 @@
 <body>
     <div class="wrapper">
         <div class="header">
-            <button class="btn">+ Novo registro</button>
+            <button class="btn" onclick="clearDrawer()">+ Novo registro</button>
         </div>
         <main>
             <div class="table">
@@ -46,6 +46,9 @@
                         <th class="paymentDate">
                             Pago em
                         </th>
+                        <th>
+                            Ações
+                        </th>
                     </tr>
                     <tr onclick="items.makeActive(this)">
                         <td class="id">
@@ -65,6 +68,9 @@
                         </td>
                         <td class="paymentDate">
                             09 / 12 / 2022
+                        </td>
+                        <td>
+                            <button onclick="items.remove($(this).parent().parent())" class="btn remove">Remover</button>
                         </td>
                     </tr>
                 </table>

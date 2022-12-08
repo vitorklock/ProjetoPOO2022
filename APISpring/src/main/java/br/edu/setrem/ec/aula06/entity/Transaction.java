@@ -1,6 +1,5 @@
 package br.edu.setrem.ec.aula06.entity;
 
-import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -11,10 +10,24 @@ public class Transaction {
 	@Id
 	private Integer id;
 	private Double value;
-	private Date dueDate;
-	private Date paymentDate;
+	private String dueDate;
+	private String paymentDate;
 	private String way;
 	private String description;
+	
+	public String getDueDate() {
+		return dueDate;
+	}
+	public void setDueDate(String dueDate) {
+		this.dueDate = dueDate;
+	}
+	public String getPaymentDate() {
+		return paymentDate;
+	}
+	public void setPaymentDate(String paymentDate) {
+		this.paymentDate = paymentDate;
+	}
+	
 	public Integer getId() {
 		return id;
 	}
@@ -27,18 +40,7 @@ public class Transaction {
 	public void setValue(Double value) {
 		this.value = value;
 	}
-	public Date getDueDate() {
-		return dueDate;
-	}
-	public void setDueDate(Date dueDate) {
-		this.dueDate = dueDate;
-	}
-	public Date getPaymentDate() {
-		return paymentDate;
-	}
-	public void setPaymentDate(Date paymentDate) {
-		this.paymentDate = paymentDate;
-	}
+	
 	public String getWay() {
 		return way;
 	}

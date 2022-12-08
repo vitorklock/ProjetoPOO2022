@@ -40,8 +40,21 @@ body {
     color: #fff;
     cursor: pointer;
 }
+
 .btn:hover {
     background: rgba(255, 255, 255, 0.1);
+}
+
+.btn.remove {
+    background: rgba(182, 38, 38, 0.068);
+    border: 1px solid rgba(182, 38, 38, 0.349);
+    padding: 3px 10px;
+    margin: 2px 0;
+}
+
+.btn.remove:hover {
+    background: rgba(255, 46, 46, 0.507);
+    border: 1px solid rgba(245, 15, 15, 0.849);
 }
 
 main {
@@ -110,6 +123,8 @@ label[for=id] {
 
 .table table tr {
     border-bottom: 1px dotted rgba(255, 255, 255, 0.2);
+    cursor: pointer;
+    cursor: cell;
 }
 
 tr:not(.head):hover {

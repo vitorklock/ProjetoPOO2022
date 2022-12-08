@@ -17,12 +17,15 @@ let items = new function Items() {
     }
 
     this.get = (element) => {
-        return new Item(element);
+        let e = new Item(element);
+        console.log(e)
+        return e;
     }
 
     this.makeActive = (element) => {
         activeItem = $(element);
         let item = new Item(element);
+        console.log(item)
 
         $('#id').val(item.id);
         $('#dueDate').val(item.dueDate);
@@ -32,36 +35,30 @@ let items = new function Items() {
         $('#paymentDate').val(item.paymentDate);
     }
 
-    this.save = () => {
+    this.save = async () => {
         let item = new Item(activeItem);
 
+        let id = $('#id').val(),
+            dueDate = $('#dueDate').val(),
+            way = $('#way').val(),
+            description = $('#description').val(),
+            value = $('#value').val(),
+            paymentDate = $('#paymentDate').val();
+
+        if (!dueDate || !way || !description || !value) {
+            alert('Preencha todos os campos!');
+            return;
+        }
+
         if (activeItem) {
-            item.id = $('#id').val();
-            item.dueDate = $('#dueDate').val();
-            item.way = $('#way').val();
-            item.description = $('#description').val();
-            item.value = $('#value').val();
-            item.paymentDate = $('#paymentDate').val();
-
-            activeItem.find('.id').html(item.dueDate);
-            activeItem.find('.dueDate').html(item.dueDate);
-            activeItem.find('.way').html(item.way);
-            activeItem.find('.description').html(item.description);
-            activeItem.find('.value').html(item.value);
-            activeItem.find('.paymentDate').html(item.paymentDate);
+            activeItem.find('.id').html(id);
+            activeItem.find('.dueDate').html(dueDate);
+            activeItem.find('.way').html(way);
+            activeItem.find('.description').html(description);
+            activeItem.find('.value').html(value);
+            activeItem.find('.paymentDate').html(paymentDate);
         } else {
-            let dueDate = $('#dueDate').val(),
-                way = $('#way').val(),
-                description = $('#description').val(),
-                value = $('#value').val(),
-                paymentDate = $('#paymentDate').val(),
-                id = Math.floor(Math.random() * 99999999);
-
-
-            if (!dueDate || !way || !description || !value) {
-                alert('Preencha todos os campos!');
-                return;
-            }
+            id = Math.floor(Math.random() * 9999);
 
             $('table').append(`
             <tr onclick="items.makeActive(this)">
@@ -71,16 +68,62 @@ let items = new function Items() {
                 <td class="description">${description}</td>
                 <td class="value">${value}</td>
                 <td class="paymentDate">${paymentDate}</td>
+                <td>
+                <button onclick="items.remove($(this).parent().parent())" class="btn remove">
+                    Remover
+                </button>
+                </td>
             </tr>
         `);
+        };
+
+        item = new Item(activeItem);
+
+        let newItem = {
+            id: Number(item.id),
+            description: item.description,
+            dueDate: item.dueDate,
+            paymentDate: item.paymentDate,
+            value: parseInt(Number(item.value.replaceAll(",", "").replace(/[^0-9.]+/g, ''))),
+            way: item.way == 'Saída' ? 'out' : 'in',
         }
+
+        await new Promise(r => setTimeout(r, 200));
+
+        console.log(newItem)
+
+        await fetch(`${apiUrl}/transaction`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            },
+            mode: "cors",
+            body: JSON.stringify(newItem)
+        });
 
         clearDrawer();
         activeItem = null;
     }
+
+    this.remove = async (element, event) => {
+        // event.stopPropagation();
+
+        await fetch(`${apiUrl}/transaction/${new Item(element).id}`, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            },
+            mode: "cors",
+        });
+
+        $(element).remove();
+    }
 }
 
 function clearDrawer() {
+    $('#id').val(Math.floor(Math.random() * 9999));
     $('#dueDate').val('');
     $('#way').val('');
     $('#description').val('');
@@ -88,7 +131,7 @@ function clearDrawer() {
     $('#paymentDate').val('');
 }
 
-const apiUrl = "http://localhost:8008";
+const apiUrl = "http://localhost:8080";
 async function listInitial() {
     let reqTransactions = await fetch(`${apiUrl}/transaction`, {
         method: "GET",
@@ -101,7 +144,40 @@ async function listInitial() {
     let transactions = await reqTransactions.json();
 
     console.log(transactions)
+
+    $('table tr:not(:first)').remove();
+    for (let transaction of transactions) {
+        $('table').append(`
+        <tr onclick="items.makeActive(this)">
+                        <td class="id">
+                            ${transaction.id}
+                        </td>
+                        <td class="dueDate">
+                            ${transaction.dueDate || ""}
+                        </td>
+                        <td class="way">
+                            ${!transaction.way ? "" : transaction.way == "out" ? "Pagar" : "Receber"}
+                        </td>
+                        <td class="description">
+                            ${transaction.description || ""}
+                        </td>
+                        <td class="value">
+                            ${transaction.value || ""}
+                        </td>
+                        <td class="paymentDate">
+                            ${transaction.paymentDate || ""}
+                        </td>
+                        <td>
+                            <button onclick="items.remove($(this).parent().parent())" class="btn remove">Remover</button>
+                        </td>
+                    </tr>
+        `)
+    }
 }
+
+$(document).ready(async () => {
+    await listInitial();
+})
 
 
 
